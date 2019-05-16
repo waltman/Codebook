@@ -14,9 +14,9 @@ class Grid:
         row, col = rc
         if not 0 <= row <= self._rows-1:
             return None
-        if not 0 <= col <= self._cols:
+        if not 0 <= col <= self._cols-1:
             return None
-        return self._grid[row,col]
+        return self._grid[row][col]
 
     def each_row(self):
         for row in self._grid:
@@ -32,13 +32,13 @@ class Grid:
         self._grid = [[Cell(row, col) for col in range(self._cols)] for row in range(self._rows)]
 
     def configure_cells(self):
-        for cell in self.each_cell:
-            row, col = cell
+        for cell in self.each_cell():
+            row, col = cell._row, cell._col
 
             cell.north = self[row-1, col]
             cell.south = self[row+1, col]
-            self.west  = self[row, col-1]
-            self.east  = self[row, col+1]
+            cell.west  = self[row, col-1]
+            cell.east  = self[row, col+1]
 
     def random_cell(self):
         row = randint(0, self._rows-1)
