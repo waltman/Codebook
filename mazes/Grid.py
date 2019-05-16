@@ -47,4 +47,9 @@ class Grid:
 
     def __len__(self):
         return self._rows * self._cols
-    
+
+    def show_grid(self):
+        for row in range(self._rows):
+            for col in range(self._cols):
+                print(self._grid[row][col].bitfield(), end=' ')
+            print('')
