@@ -32,3 +32,16 @@ class Cell:
 
     def __str__(self):
         return f'({self._row},{self._col})'
+
+    def bitfield(self):
+        bf = 0
+        if self.is_linked(self.north):
+            bf += 1
+        if self.is_linked(self.east):
+            bf += 2
+        if self.is_linked(self.south):
+            bf += 4
+        if self.is_linked(self.west):
+            bf += 8
+
+        return bf
