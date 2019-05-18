@@ -53,3 +53,24 @@ class Grid:
             for col in range(self._cols):
                 print(self._grid[row][col].bitfield(), end=' ')
             print('')
+
+    def __str__(self):
+        out = "+" + "---+" * self._cols + "\n"
+
+        for row in self.each_row():
+            top = "|"
+            bottom = "+"
+
+            for cell in row:
+                body = " " * 3
+                east = " " if cell.is_linked(cell.east) else "|"
+                top += body + east
+
+                south = " " * 3 if cell.is_linked(cell.south) else "---"
+                corner = "+"
+                bottom += south + corner
+
+            out += top + "\n"
+            out += bottom + "\n"
+
+        return out

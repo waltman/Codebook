@@ -9,4 +9,5 @@ cols = int(argv[2])
 
 grid = Grid(rows, cols)
 maze = Binary_Tree(grid)
-grid.show_grid()
+# grid.show_grid()
+print(grid)

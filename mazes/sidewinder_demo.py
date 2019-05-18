@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from sys import argv
+from sys import argv, stderr
 
 from Grid import Grid
 from Sidewinder import Sidewinder
@@ -9,4 +9,6 @@ cols = int(argv[2])
 
 grid = Grid(rows, cols)
 maze = Sidewinder(grid)
-grid.show_grid()
+# grid.show_grid()
+# print(grid, file=stderr)
+print(grid)
