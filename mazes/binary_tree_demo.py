@@ -9,5 +9,6 @@ cols = int(argv[2])
 
 grid = Grid(rows, cols)
 maze = Binary_Tree(grid)
-grid.show_grid()
-print(grid, file=stderr)
+# grid.show_grid()
+# print(grid, file=stderr)
+print(grid)

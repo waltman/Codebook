@@ -54,8 +54,55 @@ class Grid:
                 print(self._grid[row][col].bitfield(), end=' ')
             print('')
 
+    def _padded_bitfield(self):
+        # Returns a 0-padded bitfield to make the logic simpler in_corner() 
+        bitfield = []
+        line = [0] * (self._cols + 2)
+        bitfield.append(line)
+
+        for row in range(self._rows):
+            line = [0] + [self._grid[row][col].bitfield() for col in range(self._cols)] + [0]
+            bitfield.append(line)
+
+        line = [0] * (self._cols + 2)
+        bitfield.append(line)
+
+        return bitfield
+
+    def _corner(self, bitfield, row, col):
+        # This is the tricky part. Which corner piece should we use?
+        corner = {
+            (False, False, False, False): ' ',
+            (False, False, False, True ): '╷',
+            (False, False, True , False): '╶', 
+            (False, False, True , True ): '┌',
+            (False, True , False, False): '╴',
+            (False, True , False, True ): '┐',
+            (False, True , True , False): '─',
+            (False, True , True , True ): '┬',
+            (True , False, False, False): '╵',
+            (True , False, False, True ): '│',
+            (True , False, True , False): '└',
+            (True , False, True , True ): '├',
+            (True , True , False, False): '┘',
+            (True , True , False, True ): '┤',
+            (True , True , True , False): '┴',
+            (True , True , True , True ): '┼',
+        }
+
+        nw = bitfield[row+1][col+1]
+        ne = bitfield[row+1][col+2]
+        sw = bitfield[row+2][col+1]
+        se = bitfield[row+2][col+2]
+
+        top = nw & 2 == 0
+        left = nw & 4 == 0
+        right = False if ne == 0 else ne & 4 == 0
+        bottom = False if sw == 0 else sw & 2 == 0
+
+        return corner[(top, left, right, bottom)]
+    
     def __str__(self):
-#        out = "+" + "---+" * self._cols + "\n"
         # draw top row
         out = "┌"
         for col in range(self._cols-1):
@@ -66,27 +113,24 @@ class Grid:
                 out += "───┬"
         out += "───┐\n"
 
-        for row in self.each_row():
-            # top = "|"
-            # bottom = "+"
-            cell = row[0]
+        bitfield = self._padded_bitfield()
+        for row in range(self._rows):
+            cell = self._grid[row][0]
             top = "│"
-            last_row = cell.south is None:
+            last_row = cell.south is None
             if last_row:
                 bottom = "└"
             else:
-                bottom = "├" if cell.is_linked(cell.south) else "│"
+                bottom = "│" if cell.is_linked(cell.south) else "├"
 
-            for cell in row:
+            for col in range(self._cols):
+                cell = self._grid[row][col]
                 body = " " * 3
-#                east = " " if cell.is_linked(cell.east) else "|"
                 east = " " if cell.is_linked(cell.east) else "│"
                 top += body + east
 
-#                south = " " * 3 if cell.is_linked(cell.south) else "---"
                 south = " " * 3 if cell.is_linked(cell.south) else "───"
-#                corner = "+"
-                if 
+                corner = self._corner(bitfield, row, col)
                 bottom += south + corner
 
             out += top + "\n"
