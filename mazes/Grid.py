@@ -55,19 +55,38 @@ class Grid:
             print('')
 
     def __str__(self):
-        out = "+" + "---+" * self._cols + "\n"
+#        out = "+" + "---+" * self._cols + "\n"
+        # draw top row
+        out = "┌"
+        for col in range(self._cols-1):
+            cell = self._grid[0][col]
+            if cell.is_linked(cell.east):
+                out += "────"
+            else:
+                out += "───┬"
+        out += "───┐\n"
 
         for row in self.each_row():
-            top = "|"
-            bottom = "+"
+            # top = "|"
+            # bottom = "+"
+            cell = row[0]
+            top = "│"
+            last_row = cell.south is None:
+            if last_row:
+                bottom = "└"
+            else:
+                bottom = "├" if cell.is_linked(cell.south) else "│"
 
             for cell in row:
                 body = " " * 3
-                east = " " if cell.is_linked(cell.east) else "|"
+#                east = " " if cell.is_linked(cell.east) else "|"
+                east = " " if cell.is_linked(cell.east) else "│"
                 top += body + east
 
-                south = " " * 3 if cell.is_linked(cell.south) else "---"
-                corner = "+"
+#                south = " " * 3 if cell.is_linked(cell.south) else "---"
+                south = " " * 3 if cell.is_linked(cell.south) else "───"
+#                corner = "+"
+                if 
                 bottom += south + corner
 
             out += top + "\n"

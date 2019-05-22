@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from sys import argv
+from sys import argv, stderr
 
 from Grid import Grid
 from Binary_Tree import Binary_Tree
@@ -9,5 +9,5 @@ cols = int(argv[2])
 
 grid = Grid(rows, cols)
 maze = Binary_Tree(grid)
-# grid.show_grid()
-print(grid)
+grid.show_grid()
+print(grid, file=stderr)
