@@ -17,5 +17,4 @@ print(grid)
 
 print('path from northwest corner to southwest corner')
 grid.distances = distances.path_to(grid[rows-1, 0])
-print('attempting to print grid')
 print(grid)
