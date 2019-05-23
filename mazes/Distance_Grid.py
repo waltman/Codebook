@@ -9,7 +9,7 @@ class Distance_Grid(Grid):
         if self.distances and cell in self.distances:
             return '{:3d}'.format(self.distances[cell])
         else:
-            super().contents_of(cell)
+            return super().contents_of(cell)
 
         
         
