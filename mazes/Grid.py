@@ -102,6 +102,9 @@ class Grid:
 
         return corner[(top, left, right, bottom)]
     
+    def contents_of(self, cell):
+        return "   "
+
     def __str__(self):
         # draw top row
         out = "┌"
@@ -125,7 +128,7 @@ class Grid:
 
             for col in range(self._cols):
                 cell = self._grid[row][col]
-                body = " " * 3
+                body = self.contents_of(cell)
                 east = " " if cell.is_linked(cell.east) else "│"
                 top += body + east
 

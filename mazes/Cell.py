@@ -1,3 +1,6 @@
+from Distances import Distances
+from queue import Queue
+
 class Cell:
     def __init__(self, row, col):
         self._row = row
@@ -45,3 +48,18 @@ class Cell:
             bf += 8
 
         return bf
+
+    def distances(self):
+        distances = Distances(self)
+        q = Queue()
+        q.put(self)
+
+        while not q.empty():
+            cell = q.get()
+            for linked in cell.links():
+                if linked in distances:
+                    continue
+                distances[linked] = distances[cell] + 1
+                q.put(linked)
+
+        return distances
