@@ -1,5 +1,5 @@
 from Distances import Distances
-from queue import Queue
+from collections import deque
 
 class Cell:
     def __init__(self, row, col):
@@ -51,15 +51,15 @@ class Cell:
 
     def distances(self):
         distances = Distances(self)
-        q = Queue()
-        q.put(self)
+        q = deque()
+        q.append(self)
 
-        while not q.empty():
-            cell = q.get()
+        while q:
+            cell = q.popleft()
             for linked in cell.links():
                 if linked in distances:
                     continue
                 distances[linked] = distances[cell] + 1
-                q.put(linked)
+                q.append(linked)
 
         return distances
