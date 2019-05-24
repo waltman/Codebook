@@ -12,9 +12,6 @@ class Distances:
     def __contains__(self, cell):
         return cell in self._cells
 
-    def cells(self):
-        return keys(self._cells)
-
     def path_to(self, goal):
         current = goal
 
